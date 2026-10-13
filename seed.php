@@ -23,19 +23,37 @@ $memberCount = 10;
 // Five titles per block; the block decides the category (names from data-model §9)
 $blocks = ['Novela', 'Novela', 'Ciencia', 'Tecnología', 'Historia', 'Infantil'];
 
+// A deliberately unconventional shelf: real books that rarely show up in demo data
 $titles = [
-    ['Cien años de soledad', 'Gabriel García Márquez'], ['El amor en los tiempos del cólera', 'Gabriel García Márquez'],
-    ['La vorágine', 'José Eustasio Rivera'], ['María', 'Jorge Isaacs'], ['Rayuela', 'Julio Cortázar'],
-    ['Pedro Páramo', 'Juan Rulfo'], ['Ficciones', 'Jorge Luis Borges'], ['Don Quijote de la Mancha', 'Miguel de Cervantes'],
-    ['La casa de los espíritus', 'Isabel Allende'], ['El túnel', 'Ernesto Sabato'],
-    ['Breve historia del tiempo', 'Stephen Hawking'], ['Cosmos', 'Carl Sagan'], ['El origen de las especies', 'Charles Darwin'],
-    ['El gen egoísta', 'Richard Dawkins'], ['Una breve historia de casi todo', 'Bill Bryson'],
-    ['Código limpio', 'Robert C. Martin'], ['El programador pragmático', 'Andrew Hunt'], ['Patrones de diseño', 'Erich Gamma'],
-    ['Refactorización', 'Martin Fowler'], ['Diseño guiado por el dominio', 'Eric Evans'],
-    ['Sapiens', 'Yuval Noah Harari'], ['Historia mínima de Colombia', 'Jorge Orlando Melo'], ['Armas, gérmenes y acero', 'Jared Diamond'],
-    ['Las venas abiertas de América Latina', 'Eduardo Galeano'], ['Los pilares de la tierra', 'Ken Follett'],
-    ['El principito', 'Antoine de Saint-Exupéry'], ['Matilda', 'Roald Dahl'], ['Donde viven los monstruos', 'Maurice Sendak'],
-    ['Charlie y la fábrica de chocolate', 'Roald Dahl'], ['El león, la bruja y el armario', 'C. S. Lewis'],
+    // Novela
+    ['La casa de hojas', 'Mark Z. Danielewski'], ['Si una noche de invierno un viajero', 'Italo Calvino'],
+    ['Las ciudades invisibles', 'Italo Calvino'], ['La invención de Morel', 'Adolfo Bioy Casares'],
+    ['El maestro y Margarita', 'Mijaíl Bulgákov'],
+    // Novela
+    ['Solaris', 'Stanisław Lem'], ['Picnic extraterrestre', 'Arkadi y Borís Strugatski'],
+    ['La vida instrucciones de uso', 'Georges Perec'], ['Temporada de huracanes', 'Fernanda Melchor'],
+    ['Planilandia', 'Edwin A. Abbott'],
+    // Ciencia
+    ['Gödel, Escher, Bach', 'Douglas R. Hofstadter'], ['El hombre que confundió a su mujer con un sombrero', 'Oliver Sacks'],
+    ['El emperador de todos los males', 'Siddhartha Mukherjee'], ['La vida secreta de los árboles', 'Peter Wohlleben'],
+    ['Caos: la creación de una ciencia', 'James Gleick'],
+    // Tecnología
+    ['La catedral y el bazar', 'Eric S. Raymond'], ['El huevo del cuco', 'Clifford Stoll'],
+    ['El mítico hombre-mes', 'Frederick P. Brooks'], ['Hackers: héroes de la revolución informática', 'Steven Levy'],
+    ['Cibernética', 'Norbert Wiener'],
+    // Historia
+    ['El queso y los gusanos', 'Carlo Ginzburg'], ['Sal: historia de la única piedra comestible', 'Mark Kurlansky'],
+    ['El infinito en un junco', 'Irene Vallejo'], ['Los sonámbulos', 'Christopher Clark'],
+    ['Una historia de la lectura', 'Alberto Manguel'],
+    // Infantil
+    ['El árbol rojo', 'Shaun Tan'], ['La cosa perdida', 'Shaun Tan'],
+    ['Los misterios del señor Burdick', 'Chris Van Allsburg'], ['El pato y la muerte', 'Wolf Erlbruch'],
+    ['Emigrantes', 'Shaun Tan'],
+];
+
+$memberNames = [
+    'Aurelia Montoya', 'Baltazar Quintero', 'Casilda Rentería', 'Dámaso Villegas', 'Eulalia Zapata',
+    'Fermín Ospina', 'Greta Londoño', 'Horacio Bedoya', 'Irene Cifuentes', 'Jacinto Arboleda',
 ];
 
 try {
@@ -48,7 +66,7 @@ try {
     $bookIds = [];
 
     for ($i = 0; $i < $bookCount; $i++) {
-        [$title, $author] = $titles[$i] ?? ['Libro de demostración '.($i + 1), 'Autor '.(($i % 97) + 1)];
+        [$title, $author] = $titles[$i] ?? ['Volumen sin catalogar n.º '.($i + 1), 'Anónimo '.(($i % 97) + 1)];
 
         $bookIds[] = $api->expect(201, 'POST', '/books', [
             'title' => $title,
@@ -66,7 +84,7 @@ try {
 
     for ($i = 0; $i < $memberCount; $i++) {
         $memberIds[] = $api->expect(201, 'POST', '/members', [
-            'full_name' => 'Socio de demostración '.($i + 1),
+            'full_name' => $memberNames[$i] ?? 'Lector '.($i + 1),
             'document_number' => (string) (1000000001 + $i),
         ])['id'];
     }

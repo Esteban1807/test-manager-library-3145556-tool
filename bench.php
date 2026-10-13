@@ -15,7 +15,7 @@ const LIMIT_MS = 300.0;
 
 $options = tool_options($argv);
 $runs = max(5, (int) ($options['runs'] ?? 20));
-$text = $options['q'] ?? 'libro';
+$text = $options['q'] ?? 'volumen';
 
 try {
     $api = tool_client();
